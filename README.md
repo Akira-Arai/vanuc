@@ -224,7 +224,7 @@ Based on this assumption, the spill-in from other surrounding tissues is first r
 
 $$\hat{\rho_{MG}} (k) = \dfrac{G - \displaystyle \sum_{i \neq k} C_i RSF_i}{RSF_k}$$  
 
-Where the radioactivity concentration $C_i$ of other surrounding tissues must be given, and the VANUC program uses the value $\hat{\rho_{GTM}}(i) obtained by the GTM method.  
+Where the radioactivity concentration $C_i$ of other surrounding tissues must be given, and the VANUC program uses the value $\hat{\rho_{GTM}}(i)$ obtained by the GTM method.  
 [^3]:[H W Muller-Gartner, J M Links, J L Prince, R N Bryan, E McVeigh, J P Leal, C Davatzikos, J J Frost. Measurement of radiotracer concentration in brain gray matter using positron emission tomography: MRI-based correction for partial volume effects. J Cereb Blood Flow Metab. 1992 Jul;12(4):571-83](https://pubmed.ncbi.nlm.nih.gov/1618936/)  
 
 ### RBV
