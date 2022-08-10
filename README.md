@@ -29,7 +29,7 @@ This program runs on MATLAB and requires SPM to be installed.
     1. [Program Processing Flow](#3-1-program-processing-flow)
     1. [Theory of Partial Volume Effect Correction Methods](#3-2-theory-of-partial-volume-effect-correction-methods)
     1. [Results of Previous Studies](#3-3-results-of-previous-studies)
-1. [Licenses](#4-licenses)
+1. [Cautions for Use](#4-cautions-for-use)
 1. [References](#5-references)
 
 # 1. Preparation before Use
@@ -279,7 +279,7 @@ The process flow is as follows.
 ## 3-3. Results of Previous Studies
 (in preparation)
 
-# 4. Licenses
+# 4. Cautions for Use
 When presenting the results obtained by using this software in scientific journals or at conferences, etc., please clearly state the name of the software, etc.  
 The developer is not responsible for any damage caused by the use or malfunction of this software.  
 Please click [here](/LICENSE) for license terms.
