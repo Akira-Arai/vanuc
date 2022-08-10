@@ -47,12 +47,12 @@ To use SPM12 functions, SPM12 download and path setting are required.
 
 ## 1-2. Download VANUC
 1. Click "Code" on [this page](../../) and click Download ZIP to download all the files in the repository. Unzip the downloaded zip file.  
-1. Save the entire "vanuc" folder. To avoid errors, it is preferable to save the files in a location such as directly under the C: drive.  
+1. Save the entire "vanuc-main" folder. To avoid errors, it is preferable to save the files in a location such as directly under the C: drive.  
 
 ## 1-3. Path Settings for VANUC
 1. Launch MATLAB.  
 1. Open "ENVIRONMENT" > "Set Path" on the toolbar.  
-1. Click "Add Folder...". and select "vanuc" folder, then click "Save".  
+1. Click "Add Folder...". and select "vanuc-main" folder (the lowest one), then click "Save".  
 1. Close the Path Setting window, type "vanuc" in the MATLAB command window, and confirm that vanuc starts up.  
 
 ## 1-4. Image Preparation
