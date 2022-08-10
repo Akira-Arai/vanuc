@@ -1,4 +1,4 @@
-# VANUC: Voxel-wise Anatomical-region-based Non-Uniformity Correction for partial volume effects
+# VANUC: Voxel-wise Anatomical-region-based Non-Uniformity Correction for partial volume effects version 2
 
 <img src="/fig1b.jpg" width="100%">  
 
