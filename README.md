@@ -10,7 +10,7 @@
 **VANUC** is a program for performing partial volume effect correction (PVEC) of PET and SPECT images using VANUC method[^1].  
 [^1]:[Akira Arai, Yuriko Kagaya, Kentaro Takanami, Kei Takase. A novel partial volume effect correction method which allows for heterogeneous distribution: The potential advantages in the white matter activity estimation on FDG-PET. J Nucl Med. 2016;57(supplement 2):1924](https://jnm.snmjournals.org/content/57/supplement_2/1924)  
 
-* With a simple push of a button, VANUC reads image data, aligns it, corrects partial volume effects, and outputs standard brain coordinate images for statistical analysis.  
+* With simple clicks, VANUC reads image data, aligns it, corrects partial volume effects, and outputs standard brain coordinate images for statistical analysis.  
 * By inputting Hoffmann brain phantom PET images, the program can automatically calculate the parameters necessary for performing PVEC.  
 
 This program runs on MATLAB and requires SPM to be installed.    
