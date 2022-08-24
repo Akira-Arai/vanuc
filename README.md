@@ -201,20 +201,20 @@ The following is the processing flow of the partial volume effect correction too
 1. Output of various images ([see above](#partial-volume-effect-correction-output-data) for output images)  
 
 ## 3-2. Theory of Partial Volume Effect Correction Methods
-Most partial volume effect correction methods are based on a convolutional model as follows. That is, the PET or SPECT image $G$ is represented by the following equation, where the true radioactivity concentration distribution is $\rho$ and the PET or SPECT point spread function is $psf$:  
+Most partial volume effect correction methods are based on a convolutional model as follows. That is, the PET or SPECT image "G" is represented by the following equation, where the true radioactivity concentration distribution is "ρ" and the PET or SPECT point spread function is "psf":  
 
 $$G = \rho \otimes psf$$  
 
-Although we wish to obtain the true radioactivity concentration distribution $\rho$ from the image $G$ based on this model, in reality, $G$ is degraded by discrepancies from the model and statistical noise, so it is difficult to simply estimate $\rho$ by deconvolution. Therefore, the method introduced below compensates for the information on the boundaries of tissue regions lost due to image degradation by using tissue region maps $M_k, (i=1,2,...,n)$ obtained from morphological images such as MRI. Each tissue map $M_k$ represents the volume fraction of the tissue component in a voxel, such as that obtained by SPM segmentation. In addition, as is often the case, the VANUC program models the $psf$ by a 3D Gaussian function.  
+Although we wish to obtain the true radioactivity concentration distribution "ρ" from the image "G" based on this model, in reality, "G" is degraded by discrepancies from the model and statistical noise, so it is difficult to simply estimate "ρ" by deconvolution. Therefore, the method introduced below compensates for the information on the boundaries of tissue regions lost due to image degradation by using tissue region maps "M<sub>i</sub>, (i=1,2,...,n)" obtained from morphological images such as MRI. Each tissue map "M<sub>k</sub>" represents the volume fraction of the tissue component in a voxel, such as that obtained by SPM segmentation. In addition, as is often the case, the VANUC program models the "psf" by a 3D Gaussian function.  
 
 ### GTM
 The GTM (geometry transfer matrix) method is a technique reported by Rousset et al[^2]. The GTM method assumes that the radioactivity concentration within each tissue region is constant.  
-Based on this assumption, a transformation matrix $\mathbf{GTM}$ is obtained from the true radioactivity concentration within each region to the average pixel value within each region on the image. Using this transformation matrix, the true radioactivity concentration $\mathbf{\rho}$ is estimated from the average pixel value $\mathbf{g}$ obtained from the actual image by inverse transformation:  
+Based on this assumption, a transformation matrix "**GTM**" is obtained from the true radioactivity concentration within each region to the average pixel value within each region on the image. Using this transformation matrix, the true radioactivity concentration "**ρ**" is estimated from the average pixel value "**g**" obtained from the actual image by inverse transformation:  
 [^2]:[O G Rousset, Y Ma, A C Evans. Correction for partial volume effects in PET: principle and validation. J Nucl Med. 1998 May;39(5):904-11](https://pubmed.ncbi.nlm.nih.gov/9591599/)  
 
 $$\mathbf{\hat{\rho_{GTM}}} = \mathbf{GTM^{-1}} \mathbf{g}, GTM_{i,j} = \dfrac{\displaystyle \sum M_i RSF_j}{\displaystyle \sum M_i}$$  
 
-Where $RSF$ is called the region spreading function:  
+Where "RSF" is called the region spreading function:  
 
 $$RSF_k = M_k \otimes psf$$  
 
@@ -224,18 +224,18 @@ Based on this assumption, the spill-in from other surrounding tissues is first r
 
 $$\hat{\rho_{MG}} (k) = \dfrac{G - \displaystyle \sum_{i \neq k} C_i RSF_i}{RSF_k}$$  
 
-Where the radioactivity concentration $C_i$ of other surrounding tissues must be given, and the VANUC program uses the value $\hat{\rho_{GTM}}(i)$ obtained by the GTM method.  
+Where the radioactivity concentration "C<sub>i</sub>" of other surrounding tissues must be given, and the VANUC program uses the value "ρ<sub>GTM</sub>(i)" obtained by the GTM method.  
 [^3]:[H W Muller-Gartner, J M Links, J L Prince, R N Bryan, E McVeigh, J P Leal, C Davatzikos, J J Frost. Measurement of radiotracer concentration in brain gray matter using positron emission tomography: MRI-based correction for partial volume effects. J Cereb Blood Flow Metab. 1992 Jul;12(4):571-83](https://pubmed.ncbi.nlm.nih.gov/1618936/)  
 
 ### RBV
 The RBV (region-based voxel-wise correction) method is a method reported by Thomas[^4]. The RBV method also assumes that the radioactivity concentration in the tissue is constant.  
-First, voxel-wise correction coefficients are obtained by dividing the radioactivity distribution estimated by the GTM method by the image obtained by convolution of the $psf$ . Then, the correction coefficients for each voxel are multiplied by the original image $G$ to obtain the true radioactivity distribution of the tissue.  
+First, voxel-wise correction coefficients are obtained by dividing the radioactivity distribution estimated by the GTM method by the image obtained by convolution of the "psf" . Then, the correction coefficients for each voxel are multiplied by the original image "G" to obtain the true radioactivity distribution of the tissue.  
 [^4]:[Benjamin A Thomas, Kjell Erlandsson, Marc Modat, Lennart Thurfjell, Rik Vandenberghe, Sebastien Ourselin, Brian F Hutton. The importance of appropriate partial volume correction for PET quantification in Alzheimer's disease. Eur J Nucl Med Mol Imaging. 2011 Jun;38(6):1104-19](https://pubmed.ncbi.nlm.nih.gov/21336694/)  
 
 $$\hat{\rho_{RBV}} = \dfrac{\displaystyle \sum_i^n \hat{\rho_{GTM}}(i) M_i}{\displaystyle \sum_i^n \hat{\rho_{GTM}}(i) RSF_i} G$$  
  
 ### VANUC
-Unlike the methods described above, the VANUC method[^1] does not assume uniformity of the radioactivity distribution in the tissue. Instead, it assumes that the radioactivity concentration of the tissue in each voxel follows a certain fixed probability distribution in the neighborhood of the voxel of interest. The true radioactivity distribution of the tissue is obtained by distributing the pixel value $G$ which is a mixture of multiple tissue components due to the partial volume effect, to each tissue component in the most likely proportion based on their probability distributions. If the probability distribution is regarded as following a normal distribution $N(\mu, \sigma^2)$ with a constant expected value and variance, it can be estimated as the sum of the expected value component $\mu$ and the deviation $r$ as follows:  
+Unlike the methods described above, the VANUC method[^1] does not assume uniformity of the radioactivity distribution in the tissue. Instead, it assumes that the radioactivity concentration of the tissue in each voxel follows a certain fixed probability distribution in the neighborhood of the voxel of interest. The true radioactivity distribution of the tissue is obtained by distributing the pixel value "G" which is a mixture of multiple tissue components due to the partial volume effect, to each tissue component in the most likely proportion based on their probability distributions. If the probability distribution is regarded as following a normal distribution "N(μ, σ<sup>2</sup>)" with a constant expected value and variance, it can be estimated as the sum of the expected value component "μ" and the deviation "r" as follows:  
 
 $$\hat{\rho_{VANUC}}(k) = \hat{\mu}(k) + \hat{r}(k), $$  
 
@@ -243,12 +243,12 @@ $$\hat{r}(k) = \dfrac{\hat{{\sigma_k}^2} B_k}{\displaystyle \sum_t^n {\sigma_t}^
 
 $$B_k = {M_k}^2 \otimes psf^2$$  
 
-Where the expected value $\mu$ is estimated by the generalized least squares method based on multiple voxel data in a neighborhood, and the VANUC program considers the variance-covariance matrix $\mathbf{\Omega}$ as $\sigma^2 \mathbf{I}$ for simplicity:  
+Where the expected value "μ" is estimated by the generalized least squares method based on multiple voxel data in a neighborhood, and the VANUC program considers the variance-covariance matrix "**Ω**" as "σ<sup>2</sup>**I**" for simplicity:  
 
 $$\begin{align}\mathbf{\hat{\mu}} &= (\mathbf{RSF}^T \mathbf{\Omega}^{-1} \mathbf{RSF} + \lambda^2 \mathbf{I})^{-1} \mathbf{RSF}^T \mathbf{\Omega}^{-1} \mathbf{G}\\
 &= (\mathbf{RSF}^T \mathbf{RSF} + \lambda^2 \sigma^2 \mathbf{I})^{-1} \mathbf{RSF}^T \mathbf{G} \end{align}$$  
 
-The variance of the probability distribution $\sigma^2$ is considered to be constant within the tissue region, and is estimated from the variance $s^2$ of the pixel values within each region in the image $G$ , using a principle similar to the GTM method described above: 
+The variance of the probability distribution "σ<sup>2</sup>" is considered to be constant within the tissue region, and is estimated from the variance "s<sup>2</sup>" of the pixel values within each region in the image "G" , using a principle similar to the GTM method described above: 
 
 $$\mathbf{\hat{V}} = \mathbf{A^{-1}} \mathbf{S}, A_{i,j} = \dfrac{\displaystyle \sum M_i B_j}{\displaystyle \sum M_i}, $$  
 
@@ -260,11 +260,11 @@ $$\mathbf{V} = \begin{pmatrix} {\sigma_1}^2\\
 
 ### Partial volume effect reduced image
 In addition to the normal partial volume effect corrected images, the VANUC program outputs partial volume effect "reduced" images. This is an image with a certain resolution (FWHM = 2.5mm in this software) that is processed by applying the principle of partial volume effect correction. This not only reduces the partial volume effect of the original PET or SPECT image with lower resolution, but also produces an image with virtually equal resolution from various images with different conditions. Partial volume effect "reduction" is not simply smoothing of the partial volume effect corrected image.  
-Specifically, a partial volume effect "reduced" image $H$ based on the Muller-Gartner or RBV method is obtained using a region spread function of a set resolution $P$ as follows:  
+Specifically, a partial volume effect "reduced" image "H" based on the Muller-Gartner or RBV method is obtained using a region spread function of a set resolution "P" as follows:  
 
 $$H(k) = \hat{\rho}(k) P_k$$  
 
-In the case of the VANUC method, the same operation is performed for the expected value component $\mu$ :  
+In the case of the VANUC method, the same operation is performed for the expected value component "μ" :  
 
 $$H(k) = \hat{\mu}(k) P_k + \hat{r}(k)$$  
 
