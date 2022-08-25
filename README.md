@@ -187,7 +187,19 @@ To use SPM12 functions, SPM12 download and path setting are required.
 </details>
 
 ### Phantom data analysis output data
-(in preparation)  
+<details>
+<summary>List of files in the current folder:</summary>
+
+|Data Name|Description|
+|:---|:---|
+|PT~.nii or NM~.nii|Original PET or SPECT image|
+|SUV_PT~.nii|Converted image to SUV values (only for PET)|
+|roSUV_PT~.nii|PET (or SPECT) image after reorientation|
+|crop_roSUV_PT~.nii|PET (or SPECT) image after cropping|
+|DigitalPhantom.nii|Original digital phantom image|
+|rc~Phantom.nii|Digital phantom image coregistered with PET (or SPECT)|
+|Phantom.mat|G: original PET (or SPECT) values, R: true distribution, M: phantom composition.|
+</details>
 
 # 3. Principle
 ## 3-1. Program Processing Flow
@@ -269,15 +281,23 @@ In the case of the VANUC method, the same operation is performed for the expecte
 $$H(k) = \hat{\mu}(k) P_k + \hat{r}(k)$$  
 
 ### Parameter Determination in VANUC
-The VANUC software is recommended for resolution measurements using the Hoffman brain phantom based on the results of previous studies, but can be applied to other phantoms as well.  
+The VANUC software is recommended for resolution measurements using the Hoffman brain phantom based on the results of previous studies[^5], but can be applied to other phantoms as well.  
 The process flow is as follows.  
 1. Coregister the true radioactivity concentration distribution image of the phantom with the actual PET or SPECT image obtained by imaging the phantom.  
 1. A model image is created by convolving the true distribution image with a 3-dimensional Gaussian function with a certain full width at half maximum (FWHM).  
 1. The difference between the model image and the actual PET or SPECT image is evaluated as the mean squared error (MSE).  
 1. Iterate 2. through 3. to search for a FWHM that minimizes the MSE.  
+[^5]:Akira Arai, Kaoru Ozaki, Miura Tomohiko, Watanuki Shoichi, Tashiro Manabu, Ymaguchi Tatsuo. How to estimate the appropriate PSF parameters for partial volume effect correction of brain PET? JSNM 2017; 2017; Yokohama, Japan.  
 
 ## 3-3. Results of Previous Studies
-(in preparation)
+* VANUC method is  less susceptible to gray matter heterogeneity than conventional PVEC methods[^1].  
+* Simulation study suggested that PVEC with VANUC is useful for detecting white matter abnormalities[^6].  
+* Clinical studies using VANUC:  
+   * Age-related glucometabolic changes analyzed with partial volume effect correction[^7]  
+   * Impact of medium-chain triglycerides on gait performance and brain metabolic network in healthy older adults: a double-blind, randomized controlled study[^8]  
+[^6]:Akira Arai. Usefulness of non-uniform PVE-correction for evaluating the white matter metabolism. JSNM 2018; 2018; Okinawa, Japan.  
+[^7]:Akira Arai. Age-related glucometabolic changes analyzed with partial volume effect correction. JSNM 2019; 2019; Matsuyama, Japan.  
+[^8]:[Tatsushi Mutoh, Keiko Kunitoki, Yasuko Tatewaki, Shuzo Yamamoto, Benjamin Thyreau, Izumi Matsudaira, Ryuta Kawashima, Yasuyuki Taki. Impact of medium-chain triglycerides on gait performance and brain metabolic network in healthy older adults: a double-blind, randomized controlled study. Geroscience. 2022 Jun;44(3):1325-1338.](https://pubmed.ncbi.nlm.nih.gov/35380356/)  
 
 # 4. Cautions for Use
 When presenting the results obtained by using this software in scientific journals or at conferences, etc., please clearly state the name of the software, etc.  
