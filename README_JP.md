@@ -188,7 +188,19 @@ SPM12の関数を使用するため、SPM12のダウンロードとパス設定�
 </details>
 
 ### ファントムデータ解析出力データ
-（準備中）
+<details>
+<summary>現在のフォルダー内のファイルリスト:</summary>
+
+|Data Name|Description|
+|:---|:---|
+|PT~.nii or NM~.nii|PETまたはSPECT元画像|
+|SUV_PT~.nii|SUV値への変換画像（PETの場合のみ）|
+|ro~.nii|Reorientation後のPET（またはSPECT）画像|
+|crop_ro~.nii|Cropping後のPET（またはSPECT）画像|
+|DigitalPhantom.nii|デジタルファントム元画像|
+|rc~Phantom.nii|PET（またはSPECT）画像と位置合わせを行ったデジタルファントム画像|
+|Phantom.mat|G: PETまたはSPECT画素値, R: 真値, M: ファントムの形態画像.|
+</details>
 
 # 3. 原理
 ## 3-1. プログラムの処理フロー
@@ -270,15 +282,23 @@ $$H(k) = \hat{\rho}(k) P_k$$
 $$H(k) = \hat{\mu}(k) P_k + \hat{r}(k)$$  
 
 ### VANUCにおけるパラメーター決定
-VANUCソフトウェアは、過去の検討結果に基づき、Hoffman脳ファントムを用いた分解能測定を推奨するが、他のファントムに対しても応用可能である。  
+VANUCソフトウェアは、過去の検討結果[^5]に基づき、Hoffman脳ファントムを用いた分解能測定を推奨するが、他のファントムに対しても応用可能である。  
 解析フローは以下の通り。  
 1. ファントムを撮像して得られた実際のPETまたはSPECT画像に、ファントムの真の放射能濃度分布画像の位置を合わせる。  
 1. 真の分布画像に、一定の半値幅をもった3次元Gaussian関数を畳み込み積分してモデル画像を作成する。  
 1. モデル画像と実際のPETまたはSPECT画像との差を、平均二乗誤差MSEとして評価する。  
 1. 2.～3.を反復して、MSEを最小化するような半値幅を探索する。  
+[^5]:Akira Arai, Kaoru Ozaki, Miura Tomohiko, Watanuki Shoichi, Tashiro Manabu, Ymaguchi Tatsuo. How to estimate the appropriate PSF parameters for partial volume effect correction of brain PET? JSNM 2017; 2017; Yokohama, Japan.  
 
 ## 3-3. 過去の検討結果
-（準備中）  
+* VANUC法は従来法に比べて灰白質の不均一集積の影響を受けにくい[^1]。  
+* シミュレーション実験により、VANUCによる部分容積効果補正は、白質の異常検出に有用であることが示唆された[^6]。  
+* VANUCを用いた臨床研究の例:  
+   * 部分容積効果補正法を用いた脳の糖代謝における加齢変化の解析[^7]  
+   * Impact of medium-chain triglycerides on gait performance and brain metabolic network in healthy older adults: a double-blind, randomized controlled study[^8]  
+[^6]:Akira Arai. Usefulness of non-uniform PVE-correction for evaluating the white matter metabolism. JSNM 2018; 2018; Okinawa, Japan.  
+[^7]:Akira Arai. Age-related glucometabolic changes analyzed with partial volume effect correction. JSNM 2019; 2019; Matsuyama, Japan.  
+[^8]:[Tatsushi Mutoh, Keiko Kunitoki, Yasuko Tatewaki, Shuzo Yamamoto, Benjamin Thyreau, Izumi Matsudaira, Ryuta Kawashima, Yasuyuki Taki. Impact of medium-chain triglycerides on gait performance and brain metabolic network in healthy older adults: a double-blind, randomized controlled study. Geroscience. 2022 Jun;44(3):1325-1338.](https://pubmed.ncbi.nlm.nih.gov/35380356/)  
 
 # 4. 使用上の注意
 本ソフトウェアを使用して得られた成果を、科学雑誌や学会等で発表する際には、ソフトウェア名などを明記してください。  
