@@ -194,8 +194,8 @@ To use SPM12 functions, SPM12 download and path setting are required.
 |:---|:---|
 |PT~.nii or NM~.nii|Original PET or SPECT image|
 |SUV_PT~.nii|Converted image to SUV values (only for PET)|
-|roSUV_PT~.nii|PET (or SPECT) image after reorientation|
-|crop_roSUV_PT~.nii|PET (or SPECT) image after cropping|
+|ro~.nii|PET (or SPECT) image after reorientation|
+|crop_ro~.nii|PET (or SPECT) image after cropping|
 |DigitalPhantom.nii|Original digital phantom image|
 |rc~Phantom.nii|Digital phantom image coregistered with PET (or SPECT)|
 |Phantom.mat|G: original PET (or SPECT) values, R: true distribution, M: phantom composition.|
