@@ -212,9 +212,13 @@ c5.Callback = @Setting;
 		close(fmenu);
 	end
 	function Setting(src, event)
-		disp('This function is now preparing.');
+		PathV = which('vanuc.m');
+		PathV = PathV(1 : strfind(PathV, 'vanuc.m') - 1);
+		open([PathV 'vanuc_paper.pdf']);
 	end
 	function Help(src, event)
-		disp('This function is now preparing.');
+		PathV = which('vanuc.m');
+		PathV = PathV(1 : strfind(PathV, 'vanuc.m') - 1);
+		open([PathV 'usermanual.pdf']);
 	end
 end
