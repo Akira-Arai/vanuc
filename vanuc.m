@@ -1,4 +1,4 @@
-function vanuctest2
+function vanuc
 % VANUC: Voxel-wise Anatomical-region-based Non-Uniformity Correction
 % 
 % VANUC software is an image processing tool using VANUC

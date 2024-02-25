@@ -21,6 +21,11 @@ Success = 0;
 if Vx==0 || Vy==0 || Vz==0
 	return
 end
+V = spm_vol('trim_PET.nii');
+Y = spm_read_vols(V);
+V.dt = [16 1];
+spm_write_vol(V, Y);
+clear V Y
 fim = vanuc_disp('trim_PET.nii', 1);
 fim.Name = 'Cropped PET or SPECT image';
 Apara = questdlg({'Which do you use for PET parameters?', 'Preset (recommended) or Image-based estimation'}, 'Option for parameters setting', 'Preset', 'Image-based', 'Preset');

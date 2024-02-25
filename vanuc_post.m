@@ -38,9 +38,11 @@ VolPET.descrip = 'PVE-corrected with VANUC';
 VolPET.private.descrip = 'vanuc by A Arai';
 cd temp
 load Rvanuc.mat
+load G.mat
+Gmax = 10 * max(G(:));
 cd ..
 Rvanuc(find(Rvanuc<0)) = 0;
-Rvanuc(find(Rvanuc>128)) = 128;
+Rvanuc(find(Rvanuc>Gmax)) = Gmax;
 VolPET.fname = 'PVCvanuc1.nii';
 spm_write_vol(VolPET, Rvanuc(:,:,:,1));
 VolPET.fname = 'PVCvanuc2.nii';
@@ -67,7 +69,7 @@ cd temp
 load Rmg.mat
 cd ..
 Rmg(find(Rmg<0)) = 0;
-Rmg(find(Rmg>128)) = 128;
+Rmg(find(Rmg>Gmax)) = Gmax;
 VolPET.fname = 'PVCmg1.nii';
 spm_write_vol(VolPET, Rmg(:,:,:,1));
 VolPET.fname = 'PVCmg2.nii';
@@ -90,7 +92,7 @@ cd temp
 load Rrbv.mat
 cd ..
 Rrbv(find(Rrbv<0)) = 0;
-Rrbv(find(Rrbv>128)) = 128;
+Rrbv(find(Rrbv>Gmax)) = Gmax;
 VolPET.fname = 'PVCrbv1.nii';
 spm_write_vol(VolPET, Rrbv(:,:,:,1));
 VolPET.fname = 'PVCrbv2.nii';
