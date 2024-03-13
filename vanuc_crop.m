@@ -27,9 +27,16 @@ Vec = spm_imatrix(V.mat);
 vx = Vec(7);
 vy = Vec(8);
 vz = Vec(9);
+fileout = 'none';
 if exist('skip') && skip
-	fileout = ['crop_' rofilein];
-	copyfile(rofilein, fileout);
+	V = spm_vol(rofilein);
+	Y = spm_read_vols(V);
+	invM = inv(V.mat);
+	invM(1:3,4) = round(size(Y)/2);
+	V.mat = inv(invM);
+	V.fname = ['crop_' V.fname];
+	spm_write_vol(V, Y);
+	fileout = V.fname;
 	return
 end
 
@@ -91,32 +98,38 @@ for z = Scenter + 1 : numel(Zbin)
 end
 z3 = z;
 S3 = Zbin(z);
-if CP ~= 2
-	return
-elseif z1 == z2
-	return
+
+if CP ~= 2 && z1 == z2
+	Zcenter = Scenter;
+	TOP = numel(Zbin);
+	BASE = 1;
+else
+	d1 = (S1 - S0) / (z1 - z0);
+	d2 = (S2 - S1) / (z2 - z1);
+	dd = (d2 - d1) / (z2 - z0);
+	if dd >= 0
+		Zcenter = Scenter;
+		TOP = numel(Zbin);
+		BASE = 1;
+	else
+		zaxis = (z0 + z1  - d1 / dd) / 2;
+		Smax = S0 - dd * (z0 - zaxis) ^ 2;
+		zp = zaxis + sqrt(-1 * Smax / dd);
+		dT = 100 * (1 - sqrt(Smax * vx * vy / 18000)) / vz;
+		if dT > 0
+			zp = zp + dT;
+		end
+		Zcenter = round(1.2 * zp - 110 / vz);
+		TOP = min(round(Zcenter + 105 / vz), numel(Zbin));
+		BASE = max(round(Zcenter - 115 / vz), 1);
+	end
 end
-d1 = (S1 - S0) / (z1 - z0);
-d2 = (S2 - S1) / (z2 - z1);
-dd = (d2 - d1) / (z2 - z0);
-if dd >= 0
-	return
-end
-zaxis = (z0 + z1  - d1 / dd) / 2;
-Smax = S0 - dd * (z0 - zaxis) ^ 2;
-zp = zaxis + sqrt(-1 * Smax / dd);
-dT = 100 * (1 - sqrt(Smax * vx * vy / 18000)) / vz;
-if dT > 0
-	zp = zp + dT;
-end
-Zcenter = round(1.2 * zp - 110 / vz);
-TOP = min(round(Zcenter + 105 / vz), numel(Zbin));
-BASE = max(round(Zcenter - 115 / vz), 1);
+
 clear Zbin
-Xcenter = round(sum(sum(Ybin(:, :, Zcenter + round(15 / vz)), 2)' .* [1 : size(Ybin, 1)]) / sum(Ybin(:, :, Zcenter + round(15 / vz)), 1 : 2));
+Xcenter = round(sum(sum(Ybin(:, :, max(min(Zcenter + round(15 / vz), TOP), BASE)), 2)' .* [1 : size(Ybin, 1)]) / sum(Ybin(:, :, max(min(Zcenter + round(15 / vz), TOP), BASE)), 1 : 2));
 xstart = max(Xcenter - round(95 / vx), 1);
 xend = min(Xcenter + round(95 / vx), size(Ybin, 1));
-Ycenter = round(sum(sum(Ybin(:, :, Zcenter + round(15 / vz)), 1) .* [1 : size(Ybin, 2)]) / sum(Ybin(:, :, Zcenter + round(15 / vz)), 1 : 2));
+Ycenter = round(sum(sum(Ybin(:, :, max(min(Zcenter + round(15 / vz), TOP), BASE)), 1) .* [1 : size(Ybin, 2)]) / sum(Ybin(:, :, max(min(Zcenter + round(15 / vz), TOP), BASE)), 1 : 2));
 ystart = max(Ycenter - round(110 / vy), 1);
 yend = min(Ycenter + round(110 / vy), size(Ybin, 2));
 Ycenter = min(Ycenter + round(17 / vy), size(Ybin, 2));
