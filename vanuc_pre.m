@@ -95,7 +95,7 @@ if strcmp(Apara, 'Preset')
 				return
 			end
 		end
-		Input = inputdlg({'FWHM_x of PSF (mm)   (0<fx<100)', 'FWHM_y of PSF(mm)   (0<fy<100)', 'FWHM_z of PSF(mm)   (0<fz<100)', 'Distance_x from center of local region (vx)   (dx=0,1,2,3,4)', 'Distance_y from center of local region (vx)   (dy=0,1,2,3,4)', 'Distance_z from center of local region (vx)   (dz=0,1,2,3,4)', 'Regularization parameter'}, 'Input Parameters', [1 30], {num2str(Fh), num2str(Fw), num2str(Ft), num2str(Lh), num2str(Lw), num2str(Lt), num2str(Lam)});
+		Input = inputdlg({'FWHM_x of PSF (mm)   (0<fx<100)', 'FWHM_y of PSF(mm)   (0<fy<100)', 'FWHM_z of PSF(mm)   (0<fz<100)', 'Distance_x from center of local region (vx)   (integer >=0)', 'Distance_y from center of local region (vx)   (integer >=0)', 'Distance_z from center of local region (vx)   (integer >=0)', 'Regularization parameter'}, 'Input Parameters', [1 30], {num2str(Fh), num2str(Fw), num2str(Ft), num2str(Lh), num2str(Lw), num2str(Lt), num2str(Lam)});
 		if numel(Input)==0
 			return
 		end
